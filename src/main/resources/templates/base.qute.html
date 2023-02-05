@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/styles.css" rel="stylesheet">
+    <script src="/webjars/htmx.org/1.8.4/dist/htmx.min.js"></script>
+    <script src="/webjars/htmx.org/1.8.4/dist/ext/head-support.js"></script>
+    <link rel="stylesheet" href="/webjars/uikit/3.15.10/dist/css/uikit.min.css"/>
+    <script src="/webjars/uikit/3.15.10/dist/js/uikit.min.js"></script>
+    <script src="/webjars/uikit/3.15.10/dist/js/uikit-icons.min.js"></script>
+    <title>{#insert title}Reproducer{/}</title>
+</head>
+<body class="uk-light" hx-headers='{ "X-Requested-With": "XMLHttpRequest" }'>
+
+<div class="uk-container uk-container-large">
+
+    <header uk-grid>
+        <h1 class="uk-heading-medium uk-width-expand"><a href="/">Reproducer</a></h1>
+        <div class="uk-width-1-6">
+            {#if auth:isAuthenticated()}
+            {#insert userInfo}
+            <img id="avatar" src="{auth:avatarUrl}">
+            <div><span id="username">{auth:fullName}</span></div>
+            <div><a href="/auth/logout" class="logout-link"><span uk-icon="sign-out"></span>logout</a></div>
+            {/}
+            {#else}
+                <div><a href="/auth/github" class="login-link"><span uk-icon="sign-in"></span>authenticate with github</a></div>
+            {/if}
+        </div>
+    </header>
+
+    {#insert navBar}
+    <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar hx-boost="true">
+
+        <div class="uk-navbar-left">
+
+            <ul class="uk-navbar-nav">
+                <li><a href="/"><span uk-icon="home"></span>Board</a></li>
+            </ul>
+
+        </div>
+
+    </nav>
+    {/}
+
+    <div class="uk-card uk-card-secondary uk-card-body" uk-height-viewport="offset-bottom: 20">
+        <main class="container-fluid">
+            {#insert}{msg:layoutDefaultContent}{/}
+        </main>
+    </div>
+
+    <footer>
+        <span>Copyright &copy; 2023</span>
+    </footer>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
